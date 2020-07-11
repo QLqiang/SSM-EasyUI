@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinasofti.mapper.system.AuthMapper">
+	<resultMap id="BaseResultMap"
+		type="com.chinasofti.model.system.Auth">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="mark" jdbcType="VARCHAR" property="mark" />
+		<result column="seq" jdbcType="INTEGER" property="seq" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="pid" jdbcType="INTEGER" property="pid" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, mark, seq, url, pid
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from system_auth
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from system_auth
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="com.chinasofti.model.system.Auth">
+		insert into system_auth (id, name, mark,
+		seq, url, pid)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{mark,jdbcType=VARCHAR},
+		#{seq,jdbcType=INTEGER},
+		#{url,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.chinasofti.model.system.Auth">
+		insert into system_auth
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="mark != null">
+				mark,
+			</if>
+			<if test="seq != null">
+				seq,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="pid != null">
+				pid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null">
+				#{mark,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				#{seq,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				#{pid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.chinasofti.model.system.Auth">
+		update system_auth
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null">
+				mark = #{mark,jdbcType=VARCHAR},
+			</if>
+			<if test="seq != null">
+				seq = #{seq,jdbcType=INTEGER},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.chinasofti.model.system.Auth">
+		update system_auth
+		set name = #{name,jdbcType=VARCHAR},
+		mark = #{mark,jdbcType=VARCHAR},
+		seq = #{seq,jdbcType=INTEGER},
+		url =
+		#{url,jdbcType=VARCHAR},
+		pid = #{pid,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+
+
+	<resultMap id="MyMap" type="com.chinasofti.model.system.Auth">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="mark" jdbcType="VARCHAR" property="mark" />
+		<result column="seq" jdbcType="INTEGER" property="seq" />
+		<result column="url" jdbcType="VARCHAR" property="url" />
+		<result column="pid" jdbcType="INTEGER" property="pid" />
+		<collection property="children"
+			ofType="com.chinasofti.model.system.Auth">
+			<id column="r_id" jdbcType="INTEGER" property="id" />
+			<result column="r_name" jdbcType="VARCHAR" property="name" />
+			<result column="r_mark" jdbcType="VARCHAR" property="mark" />
+			<result column="r_seq" jdbcType="INTEGER" property="seq" />
+			<result column="r_url" jdbcType="VARCHAR" property="url" />
+			<result column="r_pid" jdbcType="INTEGER" property="pid" />
+		</collection>
+	</resultMap>
+	<select id="query" parameterType="java.lang.Integer"
+		resultMap="MyMap">
+		SELECT
+		t.*,
+		r.id as r_id,
+		r.name as r_name,
+		r.mark as r_mark,
+		r.seq as r_seq,
+		r.url as r_url,
+		r.pid as r_pid
+		FROM
+		system_auth t
+		LEFT JOIN
+		system_auth r ON t.id = r.pid
+	</select>
+	<select id="selectByPK" parameterType="java.lang.Integer"
+		resultMap="MyMap">
+		SELECT
+		t.*,
+		r.id as r_id,
+		r.name as r_name,
+		r.mark as r_mark,
+		r.seq as r_seq,
+		r.url as r_url,
+		r.pid as r_pid
+		FROM
+		system_auth t
+		LEFT JOIN
+		system_auth r ON t.id = r.pid where t.id = #{id}
+	</select>
+	<select id="queryRoot" parameterType="java.lang.Integer"
+		resultMap="MyMap">
+		SELECT
+		t.*,
+		r.id as r_id,
+		r.name as r_name,
+		r.mark as r_mark,
+		r.seq as r_seq,
+		r.url as r_url,
+		r.pid as r_pid
+		FROM
+		system_auth t
+		LEFT JOIN
+		system_auth r ON t.id = r.pid where t.pid is null
+	</select>
+
+</mapper>

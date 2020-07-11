@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinasofti.mapper.system.UserMapper">
+	<resultMap id="BaseResultMap"
+		type="com.chinasofti.model.system.User">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="password" jdbcType="CHAR" property="password" />
+		<result column="status" jdbcType="CHAR" property="status" />
+		<result column="createid" jdbcType="VARCHAR"
+			property="createid" />
+		<result column="createtime" jdbcType="TIMESTAMP"
+			property="createtime" />
+		<result column="modifyid" jdbcType="VARCHAR"
+			property="modifyid" />
+		<result column="modifytime" jdbcType="TIMESTAMP"
+			property="modifytime" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, password, status, createid, createtime, modifyid,
+		modifytime
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from system_user
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		system_user
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.chinasofti.model.system.User">
+		insert into system_user (id, name, password,
+		status,
+		createid, createtime,
+		modifyid, modifytime)
+		values
+		(#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{password,jdbcType=CHAR},
+		#{status,jdbcType=CHAR},
+		#{createid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+		#{modifyid,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.chinasofti.model.system.User">
+		insert into system_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createid != null">
+				createid,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="modifyid != null">
+				modifyid,
+			</if>
+			<if test="modifytime != null">
+				modifytime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="createid != null">
+				#{createid,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyid != null">
+				#{modifyid,jdbcType=VARCHAR},
+			</if>
+			<if test="modifytime != null">
+				#{modifytime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.chinasofti.model.system.User">
+		update system_user
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="createid != null">
+				createid = #{createid,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyid != null">
+				modifyid = #{modifyid,jdbcType=VARCHAR},
+			</if>
+			<if test="modifytime != null">
+				modifytime = #{modifytime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.chinasofti.model.system.User">
+		update system_user
+		set name = #{name,jdbcType=VARCHAR},
+		password = #{password,jdbcType=CHAR},
+		status = #{status,jdbcType=CHAR},
+		createid = #{createid,jdbcType=VARCHAR},
+		createtime =
+		#{createtime,jdbcType=TIMESTAMP},
+		modifyid =
+		#{modifyid,jdbcType=VARCHAR},
+		modifytime =
+		#{modifytime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+
+	<resultMap id="MyMap" type="com.chinasofti.model.system.User">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="password" jdbcType="CHAR" property="password" />
+		<result column="status" jdbcType="CHAR" property="status" />
+		<result column="createid" jdbcType="VARCHAR"
+			property="createid" />
+		<result column="createtime" jdbcType="TIMESTAMP"
+			property="createtime" />
+		<result column="modifyid" jdbcType="VARCHAR"
+			property="modifyid" />
+		<result column="modifytime" jdbcType="TIMESTAMP"
+			property="modifytime" />
+		<collection property="roles"
+			ofType="com.chinasofti.model.system.Role">
+			<id column="r_id" jdbcType="INTEGER" property="id" />
+			<result column="r_name" jdbcType="VARCHAR" property="name" />
+			<result column="r_mark" jdbcType="VARCHAR" property="mark" />
+			<result column="r_createid" jdbcType="VARCHAR"
+				property="createid" />
+			<result column="r_createtime" jdbcType="TIMESTAMP"
+				property="createtime" />
+			<result column="r_modifyid" jdbcType="VARCHAR"
+				property="modifyid" />
+			<result column="r_modifytime" jdbcType="TIMESTAMP"
+				property="modifytime" />
+		</collection>
+	</resultMap>
+	<update id="editPassword">
+		update system_user
+		set password = #{newPassword}
+		where
+		id = #{id} and password = #{oldPassword}
+	</update>
+	<sql id="where">
+		<where>
+			<if test="id != null and id != ''">
+				and id like concat('%',#{id},'%')
+			</if>
+			<if test="name != null and name != ''">
+				and name like concat('%',#{name},'%')
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+		</where>
+	</sql>
+	<select id="selectOne" parameterType="java.lang.String" resultMap="MyMap">
+		SELECT
+		u.*,
+		r.id as r_id,
+		r.name as r_name,
+		r.createid as r_createid,
+		r.createtime as r_createtime,
+		r.modifyid as r_modifyid,
+		r.modifytime as r_modifytime,
+		r.mark as r_mark
+		FROM
+		system_user u
+		LEFT JOIN system_userrole ur ON u.id = ur.userid
+		LEFT JOIN system_role r ON ur.roleid = r.id
+		where u.id = #{id}
+	</select>
+	<select id="selectList"
+		parameterType="com.chinasofti.model.system.User" resultMap="MyMap">
+		SELECT
+		u.*,
+		r.id as r_id,
+		r.name as r_name,
+		r.createid as r_createid,
+		r.createtime as r_createtime,
+		r.modifyid as r_modifyid,
+		r.modifytime as r_modifytime,
+		r.mark as r_mark
+		FROM
+		system_user u
+		LEFT JOIN system_userrole ur ON u.id = ur.userid
+		LEFT JOIN system_role r ON ur.roleid = r.id
+		where u.id in (select id from (select id from system_user <include refid="where" /> order by ${sort} ${order} limit #{page} , #{rows}) as temp)
+	</select>
+	<select id="countList"
+		parameterType="com.chinasofti.model.system.User"
+		resultType="java.lang.Long">
+		select
+		count(*)
+		from system_user
+		<include refid="where" />
+	</select>
+</mapper>

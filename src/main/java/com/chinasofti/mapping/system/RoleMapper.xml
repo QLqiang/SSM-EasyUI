@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinasofti.mapper.system.RoleMapper">
+	<resultMap id="BaseResultMap"
+		type="com.chinasofti.model.system.Role">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="mark" jdbcType="VARCHAR" property="mark" />
+		<result column="createid" jdbcType="VARCHAR"
+			property="createid" />
+		<result column="createtime" jdbcType="TIMESTAMP"
+			property="createtime" />
+		<result column="modifyid" jdbcType="VARCHAR"
+			property="modifyid" />
+		<result column="modifytime" jdbcType="TIMESTAMP"
+			property="modifytime" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, mark, createid, createtime, modifyid, modifytime
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from system_role
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from system_role
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert"
+		parameterType="com.chinasofti.model.system.Role">
+		insert into system_role (id, name, mark,
+		createid,
+		createtime, modifyid,
+		modifytime)
+		values (#{id,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{mark,jdbcType=VARCHAR},
+		#{createid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP},
+		#{modifyid,jdbcType=VARCHAR},
+		#{modifytime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.chinasofti.model.system.Role" useGeneratedKeys="true" keyProperty="id">
+		insert into system_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="mark != null">
+				mark,
+			</if>
+			<if test="createid != null">
+				createid,
+			</if>
+			<if test="createtime != null">
+				createtime,
+			</if>
+			<if test="modifyid != null">
+				modifyid,
+			</if>
+			<if test="modifytime != null">
+				modifytime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null">
+				#{mark,jdbcType=VARCHAR},
+			</if>
+			<if test="createid != null">
+				#{createid,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyid != null">
+				#{modifyid,jdbcType=VARCHAR},
+			</if>
+			<if test="modifytime != null">
+				#{modifytime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.chinasofti.model.system.Role">
+		update system_role
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mark != null">
+				mark = #{mark,jdbcType=VARCHAR},
+			</if>
+			<if test="createid != null">
+				createid = #{createid,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createtime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyid != null">
+				modifyid = #{modifyid,jdbcType=VARCHAR},
+			</if>
+			<if test="modifytime != null">
+				modifytime = #{modifytime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.chinasofti.model.system.Role">
+		update system_role
+		set name = #{name,jdbcType=VARCHAR},
+		mark = #{mark,jdbcType=VARCHAR},
+		createid =
+		#{createid,jdbcType=VARCHAR},
+		createtime =
+		#{createtime,jdbcType=TIMESTAMP},
+		modifyid =
+		#{modifyid,jdbcType=VARCHAR},
+		modifytime =
+		#{modifytime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+	<resultMap id="MyMap" type="com.chinasofti.model.system.Role">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="mark" jdbcType="VARCHAR" property="mark" />
+		<result column="createid" jdbcType="VARCHAR"
+			property="createid" />
+		<result column="createtime" jdbcType="TIMESTAMP"
+			property="createtime" />
+		<result column="modifyid" jdbcType="VARCHAR"
+			property="modifyid" />
+		<result column="modifytime" jdbcType="TIMESTAMP"
+			property="modifytime" />
+		<collection property="auths"
+			ofType="com.chinasofti.model.system.Auth">
+			<id column="a_id" jdbcType="INTEGER" property="id" />
+			<result column="a_name" jdbcType="VARCHAR" property="name" />
+			<result column="a_mark" jdbcType="VARCHAR" property="mark" />
+			<result column="a_seq" jdbcType="INTEGER" property="seq" />
+			<result column="a_url" jdbcType="VARCHAR" property="url" />
+			<result column="a_pid" jdbcType="INTEGER" property="pid" />
+		</collection>
+	</resultMap>
+	<select id="selectList"
+		parameterType="com.chinasofti.model.system.Role"
+		resultMap="MyMap">
+		SELECT
+		r.*,
+		a.id as a_id,
+		a.name as a_name,
+		a.mark as a_mark,
+		a.seq as a_seq,
+		a.url as a_url,
+		a.pid as a_pid
+		FROM
+		system_role r
+		LEFT JOIN system_roleauth ra ON r.id = ra.roleid
+		LEFT JOIN system_auth a ON ra.authid = a.id
+		where r.id in (select id from (select id from system_role order by ${sort} ${order}  LIMIT 0, 10) as temp)
+		order by r.${sort} ${order}
+	</select>
+	<select id="countList"
+		parameterType="com.chinasofti.model.system.Role"
+		resultType="java.lang.Long">
+		select
+		count(*)
+		from system_role
+	</select>
+	<select id="combobox"
+		parameterType="com.chinasofti.model.system.Role"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from system_role
+	</select>
+
+	<select id="selectOne"
+		parameterType="java.lang.Integer"
+		resultMap="MyMap">
+		SELECT
+		r.*,
+		a.id as a_id,
+		a.name as a_name,
+		a.mark as a_mark,
+		a.seq as a_seq,
+		a.url as a_url,
+		a.pid as a_pid
+		FROM
+		system_role r
+		LEFT JOIN system_roleauth ra ON r.id = ra.roleid
+		LEFT JOIN system_auth a ON ra.authid = a.id
+		where r.id = #{id}
+	</select>
+</mapper>
